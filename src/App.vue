@@ -14,6 +14,9 @@ export default {
 </script>
 
 <style lang="scss">
+body {
+  margin: 0px;
+}
 ul,
 li {
   list-style: none;

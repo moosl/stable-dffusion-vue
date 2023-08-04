@@ -1,14 +1,16 @@
 import axios from 'axios'
 const instance = axios.create({
-  // baseURL: 'https://gonelist.cugxuan.cn/onedrive/',
-  timeout: 15000
+  baseURL: 'http://localhost:5002',
+  timeout: 15000,
+  headers: {
+    'Authorization': localStorage.getItem("credential") || null,
+  }
 })
 
 // 添加响应拦截器
-axios.interceptors.response.use(
+instance.interceptors.response.use(
   response => {
     const { data } = response
-    console.log(data)
     return data
   },
   err => {
