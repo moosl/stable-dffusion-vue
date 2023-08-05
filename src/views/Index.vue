@@ -138,10 +138,17 @@ export default {
     }
   },
   mounted() {
+    if (!this.credential) {
+      this.googleAuth()
+      return
+    }
+
     this.getJobs()
     this.getJobsByJobID()
-
-    if (!this.credential) {
+    
+  },
+  methods: {
+    googleAuth() {
       let googleScript = document.createElement("script")
       googleScript.src = "https://accounts.google.com/gsi/client"
       document.head.appendChild(googleScript)
@@ -163,9 +170,7 @@ export default {
           }
         )
       })
-    }
-  },
-  methods: {
+    },
     onSubmit() {
       this.$refs["playground"].validate((valid) => {
         if (valid && this.credential) {
@@ -199,16 +204,16 @@ export default {
         })
         .then((resp) => {
           if (resp["jobs"]) {
-            this.output.forEach((item,index) => {
+            this.output.forEach((item, index) => {
               const v = resp["jobs"].filter((k) => {
                 return k["job_id"] === item["job_id"]
               })
               console.log("v", v)
-              if(v.length>0){
+              if (v.length > 0) {
                 this.output[index] = v[0]
               }
             })
-            console.log(11212312, this.output )
+            console.log(11212312, this.output)
           }
         })
     },
